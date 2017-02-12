@@ -31,7 +31,7 @@
 /* ============================================================================ */
 
 /******************************************************************************/
-/* lnk_msp430g2452.cmd - LINKER COMMAND FILE FOR LINKING MSP430G2452 PROGRAMS     */
+/* lnk_msp430g2231.cmd - LINKER COMMAND FILE FOR LINKING MSP430G2231 PROGRAMS     */
 /*                                                                            */
 /*   Usage:  lnk430 <obj files...>    -o <out file> -m <map file> lnk.cmd     */
 /*           cl430  <src files...> -z -o <out file> -m <map file> lnk.cmd     */
@@ -56,12 +56,12 @@ MEMORY
     SFR                     : origin = 0x0000, length = 0x0010
     PERIPHERALS_8BIT        : origin = 0x0010, length = 0x00F0
     PERIPHERALS_16BIT       : origin = 0x0100, length = 0x0100
-    RAM                     : origin = 0x0200, length = 0x0100
+    RAM                     : origin = 0x0200, length = 0x0080
     INFOA                   : origin = 0x10C0, length = 0x0040
     INFOB                   : origin = 0x1080, length = 0x0040
     INFOC                   : origin = 0x1040, length = 0x0040
     INFOD                   : origin = 0x1000, length = 0x0040
-    FLASH                   : origin = 0xE000, length = 0x1FE0
+    FLASH                   : origin = 0xF800, length = 0x07E0
     INT00                   : origin = 0xFFE0, length = 0x0002
     INT01                   : origin = 0xFFE2, length = 0x0002
     INT02                   : origin = 0xFFE4, length = 0x0002
@@ -116,10 +116,10 @@ SECTIONS
     ADC10        : { * ( .int05 ) } > INT05 type = VECT_INIT
     .int06       : {}               > INT06
     .int07       : {}               > INT07
-    TIMER0_A1    : { * ( .int08 ) } > INT08 type = VECT_INIT
-    TIMER0_A0    : { * ( .int09 ) } > INT09 type = VECT_INIT
+    TIMERA1      : { * ( .int08 ) } > INT08 type = VECT_INIT
+    TIMERA0      : { * ( .int09 ) } > INT09 type = VECT_INIT
     WDT          : { * ( .int10 ) } > INT10 type = VECT_INIT
-    COMPARATORA   : { * ( .int11 ) } > INT11 type = VECT_INIT
+    .int11       : {}               > INT11
     .int12       : {}               > INT12
     .int13       : {}               > INT13
     NMI          : { * ( .int14 ) } > INT14 type = VECT_INIT
@@ -130,5 +130,5 @@ SECTIONS
 /* Include peripherals memory map                                           */
 /****************************************************************************/
 
--l msp430g2452.cmd
+-l msp430g2231.cmd
 
