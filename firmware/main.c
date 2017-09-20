@@ -95,7 +95,7 @@ __interrupt void timer_a_interrupt( void )
 	tick_count++;
 	CCR0 = TIMER_RESOLUTION_TICKS;
 	TAR = 0;
-	TACTL = TASSEL_2 + ID_3 + MC_1;
+	TACTL = TASSEL_2 | ID_3 | MC_1;
 	__bic_SR_register_on_exit( LPM0_bits );
 	return;
 }
@@ -329,11 +329,13 @@ void main( void )
 	State right_state = INIT;
     unsigned int next_left = 0;
     unsigned int next_right = 0;
-	unsigned int wait_time = 300;
+	unsigned int wait_time = 200;
+	WDTCTL = WDTPW | WDT_MRST_8;
 	__enable_interrupt();
 	// Calculate Next State -> Set Outputs -> Sleep
 	while ( 1 )
 	{
+		WDTCTL = WDTPW | WDTCNTCL | WDT_MRST_8;
 		left_state_machine( &left_state, &next_left, tick_count, wait_time);
 		right_state_machine( &right_state, &next_right, tick_count, wait_time);
 		__bis_SR_register( LPM0_bits + GIE );
