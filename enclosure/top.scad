@@ -7,51 +7,109 @@
  * ingress or provide thermal insulation for the electronics.
  */
 
-inner_x = 160;          // Longest interior length of the gasket
-inner_y = 100;
-inner_z = 20;          // Longest interior width of the gasket
-wall_d = 4;           // Thickness of gasket along x/y axis
-con1_inset_x = 11;      // Length of power header perpendicular to PCB edge
-con1_inset_y = 23;      // Length of power header parallel to PCB edge
-con1_offset_y = 13;     // Offset from origin to the power header
-con2_inset_x = 11;      // Length of signal header perpendicular to PCB edge
-con2_inset_y = 33;     // Length of signal header parallel to PCB edge
-con2_offset_y = 53;      // Offset from origin to the signal header
+inner_x = 160;          // Interior dimension of enclosure in x direction.
+inner_y = 100;          // Interior dimension of enclosure in y direction.
+inner_z = 20;           // Interior dimension of enclosure in z direction.
+inner_z_min = 10;        // Minimum distance between top of enclosure and PCB.
+wall_d = 4;             // Enclosure wall thickness.
+mount_r = 3;            // Radius of PCB mounting posts.
+screw_inset = 6;        // Distance from closest edge of PCB to center of screw.
+screw_r = 3;            // Screw head radius.
+thread_outer_r = 2.182; // Mounting screw outer radius.
+pwr_inset_x = 11;       // Size of power connector in x direction.
+pwr_inset_y = 23;       // Size of power connector in the y direction.
+pwr_offset = 13;        // Offset from origin along y axis to power connector.
+sig_inset_x = 11;       // Size of signal connector in x direction.
+sig_inset_y = 33;       // Size of signal connector in y direction.
+sig_offset = 53;        // Offset from origin along y axis to signal connector.
+eps = 0.001;            // Epsilon constant to ensure overlap for difference().
 
-screw_head_r = 3;
-screw_head_h = 2;
-screw_inset = 6;
+// The top portion of the enclosure.
+module top()
+{
 
-
-module top() {
-    module outline() {
-        difference() {
-            cube([inner_x + 2 * wall_d, inner_y + 2 * wall_d, inner_z + wall_d]);
-            translate([-1, con1_offset_y + wall_d, -1]) {
-                cube([con1_inset_x + 1, con1_inset_y, inner_z + wall_d + 2]);
-            }
-            translate([-1, con2_offset_y + wall_d, -1]) {
-                cube([con2_inset_x + 1, con2_inset_y, inner_z + wall_d + 2]);
-            }
-        }
+  // Exterior shell of the top of the enclosure.
+  module exterior()
+  {
+    difference()
+    {
+      cube([inner_x + 2 * wall_d, inner_y + 2 * wall_d, inner_z + wall_d]);
+      translate([-eps, pwr_offset + wall_d, -eps])
+      {
+        cube([pwr_inset_x + eps, pwr_inset_y, inner_z + wall_d + 2 * eps]);
+      }
+      translate([-eps, sig_offset + wall_d, -eps]) {
+         cube([sig_inset_x + eps, sig_inset_y, inner_z + wall_d + 2 * eps]);
+      }
     }
-    module interior() {
-        translate([wall_d, wall_d, -1]) {
-            difference() {
-                cube([inner_x, inner_y, inner_z + 1]);
-                translate([-1, con1_offset_y - wall_d, -2]) {
-                    cube([con1_inset_x + 1, con1_inset_y + 2 * wall_d, inner_z + 4]);
-                }
-                translate([-1, con2_offset_y - wall_d, -2]) {
-                    cube([con2_inset_x + 1, con2_inset_y + 2 * wall_d, inner_z + 4]);
-                }
-            }
-        }
+  }
+
+  // Mounting stub which contacts the PCB at the screw holes.
+  module mount()
+  {
+    translate([0, 0, inner_z_min])
+    {
+      cylinder(r=screw_r + wall_d, h=inner_z_min);
     }
-    difference() {
-        outline();
-        interior();
-    }   
+    cylinder(r=mount_r, h=inner_z);
+  }
+
+  // Interior volume of the top of the enclosure.
+  module interior()
+  {
+    difference()
+    {
+      translate([0, 0, -eps]) cube([inner_x, inner_y, inner_z + eps]);
+      translate([-eps, pwr_offset - wall_d, -2 * eps])
+      {
+        cube([pwr_inset_x + eps, pwr_inset_y + 2 * wall_d, inner_z + 4 * eps]);
+      }
+      translate([-eps, sig_offset - wall_d, -2 * eps])
+      {
+        cube([sig_inset_x + eps, sig_inset_y + 2 * wall_d, inner_z + 4 * eps]);
+      }
+      translate([screw_inset, screw_inset, 0]) mount();
+      translate([inner_x - screw_inset, screw_inset, 0]) mount();
+      translate([screw_inset, inner_y - screw_inset, 0]) mount();
+      translate([inner_x - screw_inset, inner_y - screw_inset, 0]) mount();
+    }
+  }
+
+  // Holes for screws to attach the top and bottom portions of the enclosure.
+  module screw_holes()
+  {
+
+    // Screw hole centered on the origin.
+    module hole()
+    {
+      translate([0, 0, inner_z_min + wall_d])
+      {
+        cylinder(r=screw_r, h=inner_z_min + wall_d);
+      }
+      translate([0, 0, -eps])
+      {
+        cylinder(r=thread_outer_r, h=inner_z + wall_d + eps);
+      }
+    }
+
+    // Copy the hole at the correct locations.
+    translate([screw_inset, screw_inset, 0]) hole();
+    translate([inner_x - screw_inset, screw_inset, 0]) hole();
+    translate([screw_inset, inner_y - screw_inset, 0]) hole();
+    translate([inner_x - screw_inset, inner_y - screw_inset, 0]) hole();
+
+  }
+
+  /* Construct the top portion of the enclosure by removing the interior
+   * volume and the screw holes from the volume bounded by the exterior.
+   */
+  difference()
+  {
+    exterior();
+    translate([wall_d, wall_d, 0]) interior();
+    translate([wall_d, wall_d, 0]) screw_holes();
+  }
+
 }
 
 top();
