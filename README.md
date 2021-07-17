@@ -40,9 +40,9 @@ sections below contains more details about each component, how to build it, and
 some possible modifications.
 
 ### PCB
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/schematic.png)
+![Loading...](images/schematic.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/layout.png)
+![Loading...](images/layout.png)
 
 The schematic and PCB were created with
 [EAGLE](https://www.autodesk.com/products/eagle/overview?term=1-YEAR). The
@@ -72,7 +72,7 @@ Some things to consider:
   Remember to choose a wire thick enough to support up to 1 Amp.
 
 ### Software
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/fsm.png)
+![Loading...](images/fsm.png)
 
 The software component is composed of two finite state machine running on an
 MSP430 microcontroller.  There is one FSM for each turn signal: when the input
@@ -103,11 +103,11 @@ Some things to consider:
   the PCB.
 
 ### Enclosure
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/top.png)
+![Loading...](images/top.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/gasket.png)
+![Loading...](images/gasket.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/bottom.png)
+![Loading...](images/bottom.png)
 
 The enclosure was designed using [OpenSCAD](https://openscad.org/).  This is not
 a weatherproof design and the goal is to provide a minimum level of protection
@@ -121,7 +121,7 @@ is used which can handle the thermal extremes that can be found inside a
 vehicle.
 
 ## Installing the System
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/slbd.png)
+![Loading...](images/slbd.png)
 
 The system has the following connections with the vehicle's wiring:
 * **Power** - 12 V from the vehicle's low voltage battery.  Ideally this should
