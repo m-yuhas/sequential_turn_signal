@@ -37,9 +37,9 @@ funcionales del sistema.  Cada de las secciones siguientes contiene más detalle
 sobre cada componente, cómo construirlo, y unas modificaciones posibles.
 
 ### Placa de Circuito Impreso
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/schematic.png)
+![Cargando...](../images/schematic.png)
 
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/layout.png)
+![Cargando...](../images/layout.png)
 
 El esquematismo y la placa de circuito impreso estaban creados con
 [EAGLE](https://www.autodesk.com/products/eagle/overview?term=1-YEAR). El
@@ -72,7 +72,7 @@ Algunas cosas para considerar:
   Recuerda escoger un alambre lo suficiente ancho para llevar hasta 1 amperio.
 
 ### Software
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/fsm.png)
+![Cargando...](../images/fsm.png)
 
 El componente software se compone de dos autómatas finitos que ejecutan en un
 microcontrolador MSP430.  Hay un autómata finito para cada intermitente: cuando
@@ -108,11 +108,11 @@ Unas cosas para considerar:
   microcontrolador diferente y rediseñar la placa de circuito impreso.
 
 ### Caja
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/top.png)
+![Cargando...](../images/top.png)
 
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/gasket.png)
+![Cargando...](../images/gasket.png)
 
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/bottom.png)
+![Cargando...](../images/bottom.png)
 
 La caja estaba diseñada usando [OpenSCAD](https://openscad.org/).  No es un
 diseño impermeabilizado y la meta es provee un nivel de protección mínimo para
@@ -126,7 +126,7 @@ use un plástico que puede manejar los extremos térmicos que puede encontrar en
 un vehículo.
 
 ## Instalar el Sistema
-![Cargando...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/slbd.png)
+![Cargando...](../images/slbd.png)
 
 El sistema tiene las conexiones siguientes con el cableado del vehículo:
 * **Poder** - 12 V de la pila de voltaje bajo del vehículo.  Idealmente debe
