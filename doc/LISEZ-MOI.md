@@ -1,48 +1,46 @@
-# Sequential Turn Signal
-[中文指南](https://github.com/m-yuhas/sequential_turn_signal/blob/master/doc/读我档案.md)
-
-[Documentación en español](https://github.com/m-yuhas/sequential_turn_signal/blob/master/doc/LÉAME.md)
-
-[Documentation en français](https://github.com/m-yuhas/sequential_turn_signal/blob/master/doc/LISEZ-MOI.md)
+# Clignotant Séquentiel
 
 ## Introduction
-On modern vehicles sequential turn signals are rapidly increasing in popularity.
-A sequential turn signal is a turn signal which is divided into multiple
-segments that illuminate in some dynamic pattern when the signal is activated.
-While this functionality comes built in to many modern vehicles, this project
-seeks to provide a simple method to introduce this functionality to classic cars
-without having to replace the existing turn signal lights.  The software and
-hardware are configured by default for a vehicle with three independent rear turn
-signal lamps on each side of the vehicle, but can be adapted for other
-configurations if needed.
+Dans les véhicules modernes les clignotants séquentiels s'accroissent rapidement
+leur popularité.  Un clignotant séquentiel est un clignotant lequel est divisé
+en segments plusiers que s'éclairent en motif dynamique quand le clignotant est
+activé.  Tandis que cette fonctionnalité est déjà inclus en beaucoup des
+véhicules modernes, ce project cherche à fournir une méthode simple pour
+introduire cette fonctionnalité en voitures classiques sans la besoin de
+remplacer tous les feux clignotants originals.  Le logiciel et le matériel sont
+configurés par défaut pour un véhicule avec trois feux clignotants arrières
+indépendants de chaque côté du véhicule, mais il peut être adapté pour autres
+configurations s'il est nécessaire.
 
-If you plan to install this system on your vehicle, please read this entire
-guide and understand what tools and skills you will need to complete this
-project before beginning.  A high level of automotive and electronics experience
-is recommended as this system has not yet been tested in an operating
-environment.  Furthermore, it was designed for a specific vehicle and
-modifications may be required to use it in another.
+Si vous planifiez installer ce système dans votre véhicule, s'il vous plaît
+lisez ce guide entièrement et comprenez vous aurez besoin de quels outils et
+compétences avant de commencer.  Un niveau élevé d'expérience automobile et
+électronique est recommandé comme ce système n'a pas été testé dans un
+environnement opérationnel.  En outre, il est conçu pour un véhicule spécifique
+et peut-être modifications seront requis si vous voudriez l'utiliser dans un
+autre.
 
-Please check the local regulations regarding modifications to vehicles before
-starting.  This system will also introduce sequential behavior when the break
-lights first illuminate, which may or may not be legal in your jurisdiction.
-Additionally please understand the risks to yourself, your vehicle, and those
-with whom you share the road.  These include, but are not limited to
-electrocution, fire, messing up your vehicle's wiring harness, and ending up
-with a vehicle with no working turn signals or break lights.  Proceed at your
-own risk.
+S'il vous plaît vérifiez les réglementations locales concernant modifications
+aux véhicules avant de commencer.  Ce système aussi introduira le comportement
+séquentiel au début de l'éclairage des feux stop, lequel est peut-être ou
+pas peut-être légal dans votre jurisdiction.  Aditionellement s'il vous plaît
+comprenez les risques à vous-même, à votre véhicule, et aux autres gens avec qui
+vous partagez la route.  Ces incluent, mais ne sont pas limités à la
+électrocution, au feu, à ruinant le faisceau de câblage de votre véhicule, et
+à finissant avec un véhicule que n'a pas des feux clignotants ou des feux stop
+fonctionnels.  Procédez à votre risque.
 
-## Building the System
+## Construire le Système
 This system is composed of three components: a PCB with the microcontroller and
 electronics; firmware, which runs on the microcontroller; and an enclosure to
 offer some protection for the functional components of the system.  Each of the
 sections below contains more details about each component, how to build it, and
 some possible modifications.
 
-### PCB
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/schematic.png)
+### Circuit Imprimé
+![téléchargement en cours...](../images/schematic.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/layout.png)
+![téléchargement en cours...](../images/layout.png)
 
 The schematic and PCB were created with
 [EAGLE](https://www.autodesk.com/products/eagle/overview?term=1-YEAR). The
@@ -71,8 +69,8 @@ Some things to consider:
   calculate the number of turns required using [this guide](http://www.nessengr.com/technical-data/toroid-inductor-formulas-and-calculator/).
   Remember to choose a wire thick enough to support up to 1 Amp.
 
-### Software
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/fsm.png)
+### Logiciel
+![téléchargement en cours...](../images/fsm.png)
 
 The software component is composed of two finite state machine running on an
 MSP430 microcontroller.  There is one FSM for each turn signal: when the input
@@ -102,12 +100,12 @@ Some things to consider:
   controlled, you will need to select a different microcontroller and redesign
   the PCB.
 
-### Enclosure
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/top.png)
+### Boîtier
+![téléchargement en cours...](../images/top.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/gasket.png)
+![téléchargement en cours...](../images/gasket.png)
 
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/bottom.png)
+![téléchargement en cours...](../images/bottom.png)
 
 The enclosure was designed using [OpenSCAD](https://openscad.org/).  This is not
 a weatherproof design and the goal is to provide a minimum level of protection
@@ -120,8 +118,8 @@ print the pieces.  If the enclosure is 3D printed, please ensure that a plastic
 is used which can handle the thermal extremes that can be found inside a
 vehicle.
 
-## Installing the System
-![Loading...](https://www.github.com/m-yuhas/sequential_turn_signal/blob/master/images/slbd.png)
+## Installation du Système
+![téléchargement en cours...](../images/slbd.png)
 
 The system has the following connections with the vehicle's wiring:
 * **Power** - 12 V from the vehicle's low voltage battery.  Ideally this should

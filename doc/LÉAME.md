@@ -13,17 +13,17 @@ independientes en cada lado del vehículo, pero pueden estar adaptados para
 configuraciones otras si es necesario.
 
 Si planifica usted instalar este sistema en su vehículo, por favor lea esta guía
-enteramente y comprender que son las herramientas y las habilidades requeridas
+enteramente y comprenda que son las herramientas y las habilidades requeridas
 para completar este proyecto antes de empezar.  Un nivel altíssimo de
 experiencia automotriz y electrónica es recomendado como este sistema ya no ha
 probado en un medio ambiente operacional.  Además, no estaba diseñado para un
 vehículo específico y tal vez modificaciones son necesarios para usarlo en otro
 vehículo.
 
-Por favor verificar las regulaciones locales con respecto a modificaciones de
+Por favor verifique las regulaciones locales con respecto a modificaciones de
 vehículos antes de empezar.  Este sistema también introducirá el funcionamiento
 secuencial cuando las luces de freno iluminar al principio, cual podría o no
-podría ser legal en su jurisdicción.  Adicionalmente por favor comprender los
+podría ser legal en su jurisdicción.  Adicionalmente por favor comprenda los
 riesgos a su mismo, su coche, y la gente con quién comparte el camino.  Estos
 riesgos incluyen, pero no se limitan a electrocución, fuego, estropeando el
 arnés de cableado de su vehículo, y acabando con un vehículo con intermitentes o

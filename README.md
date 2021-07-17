@@ -74,7 +74,7 @@ Some things to consider:
 ### Software
 ![Loading...](images/fsm.png)
 
-The software component is composed of two finite state machine running on an
+The software component is composed of two finite state machines running on an
 MSP430 microcontroller.  There is one FSM for each turn signal: when the input
 signal line goes high, the FSM begins traversing through the output pattern
 vectors with transitions based on times.  Once the input signal line goes low,
