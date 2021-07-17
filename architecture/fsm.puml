@@ -1,0 +1,47 @@
+'Firmware State Machine for Sequential Turn Signal'
+
+@startuml
+hide empty description
+
+[*] --> Running
+state Running {
+  [*] --> LeftInit
+  LeftInit --> LeftPattern1 : left_input == 1
+
+  LeftPattern1 --> LeftPattern2 : tick_count == next_left
+  LeftPattern1 --> LeftInit : left_input != 1
+  LeftPattern1 : Output 'xxo';
+
+  LeftPattern2 --> LeftPattern3 : tick_count == next_left
+  LeftPattern2 --> LeftInit : left_input != 1
+  LeftPattern2 : Output 'xoo'
+
+  LeftPattern3 --> LeftPattern4 : tick_count == next_left
+  LeftPattern3 --> LeftInit : left_input != 1
+  LeftPattern3 : Output 'ooo'
+
+  LeftPattern4 --> LeftInit
+  LeftPattern4 : Output 'ooo'
+
+  ||
+
+  [*] --> RightInit
+  RightInit --> RightPattern1 : right_input == 1
+
+  RightPattern1 --> RightPattern2 : tick_count == next_right
+  RightPattern1 --> RightInit : right_input != 1
+  RightPattern1 : Output 'oxx';
+
+  RightPattern2 --> RightPattern3 : tick_count == next_right
+  RightPattern2 --> RightInit : right_input != 1
+  RightPattern2 : Output 'oox'
+
+  RightPattern3 --> RightPattern4 : tick_count == next_right
+  RightPattern3 --> RightInit : right_input != 1
+  RightPattern3 : Output 'ooo'
+
+  RightPattern4 --> RightInit
+  RightPattern4 : Output 'ooo'
+}
+
+@enduml

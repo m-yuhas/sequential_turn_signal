@@ -1,0 +1,134 @@
+'System Level Block Diagram for Sequential Turn Signal'
+
+@startuml
+skinparam componentStyle rectangle
+
+
+'Define sprites to make the diagram more friendly.'
+
+sprite $battery [16x16/16] {
+0000000000000000
+0000000000000000
+0000FF0000FF0000
+0000FF0000FF0000
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+0000000000000000
+0000000000000000
+0000000000000000
+}
+
+sprite $lightBulb [16x16/16] {
+0000000FF0000000
+0000FFF00FFF0000
+00FF00000000FF00
+0F000000000000F0
+0F000000000000F0
+0F000000000000F0
+0F000000000000F0
+0F0000FFFF0000F0
+0F0000F00F0000F0
+0F0000F00F0000F0
+00FF00F00F00FF00
+0000FFFFFFFF0000
+000000FFFF000000
+000000FFFF000000
+000000FFFF000000
+000000FFFF000000
+}
+
+sprite $turnSignal [16x16/16] {
+0000000000000000
+000F00000000F000
+000F00000000F000
+00FF00000000FF00
+00FF00000000FF00
+0FFFFF0000FFFFF0
+0FFFFF0000FFFFF0
+FFFFFF0000FFFFFF
+FFFFFF0000FFFFFF
+0FFFFF0000FFFFF0
+0FFFFF0000FFFFF0
+00FF00000000FF00
+00FF00000000FF00
+000F00000000F000
+000F00000000F000
+0000000000000000
+}
+
+sprite $ecu [16x16/16] {
+00FF00000000FF00
+00FF00000000FF00
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+00FFFFFFFFFFFF00
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+00FF00000000FF00
+00FF00000000FF00
+}
+
+
+'Define vehicle level components.'
+
+rectangle "LV Battery" <<$battery>> as lvbat
+rectangle "Signal Stalk" <<$turnSignal>> as sigstalk
+rectangle "Sequential Turn Signal ECU" <<$ecu>> as sts
+rectangle "Outer Left\nSignal Lamp" <<$lightBulb>> as olsl
+rectangle "Center Left\nSignal Lamp" <<$lightBulb>> as clsl
+rectangle "Inner Left\nSignal Lamp" <<$lightBulb>> as ilsl
+rectangle "Inner Right\nSignal Lamp" <<$lightBulb>> as irsl
+rectangle "Center Right\nSignal Lamp" <<$lightBulb>> as crsl
+rectangle "Outer Right\nSignal Lamp" <<$lightBulb>> as orsl
+
+
+'Define interfaces between this ECU and rest of vehicle.'
+
+interface "Power" as vbat
+interface "Left Signal In" as left_sig_in
+interface "Right Signal In" as right_sig_in
+interface "Left Signal\nOut 1" as left_sig_out1
+interface "Left Signal\nOut 2" as left_sig_out2
+interface "Left Signal\nOut 3" as left_sig_out3
+interface "Right Signal\nOut 1" as right_sig_out1
+interface "Right Signal\nOut 2" as right_sig_out2
+interface "Right Signal\nOut 3" as right_sig_out3
+
+
+'Connect the system.'
+
+lvbat --> vbat
+sigstalk --> left_sig_in
+sigstalk --> right_sig_in
+vbat --> sts
+left_sig_in --> sts
+right_sig_in --> sts
+sts --> left_sig_out3
+sts --> left_sig_out2
+sts --> left_sig_out1
+sts --> right_sig_out1
+sts --> right_sig_out2
+sts --> right_sig_out3
+left_sig_out3 --> olsl
+left_sig_out2 --> clsl
+left_sig_out1 --> ilsl
+right_sig_out1 --> irsl
+right_sig_out2 --> crsl
+right_sig_out3 --> orsl
+
+
+@enduml
