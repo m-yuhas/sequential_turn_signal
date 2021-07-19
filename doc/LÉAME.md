@@ -129,7 +129,7 @@ un vehículo.
 ![Cargando...](../images/slbd.png)
 
 El sistema tiene las conexiones siguientes con el cableado del vehículo:
-* **Poder** - 12 V de la pila de voltaje bajo del vehículo.  Idealmente debe
+* **Poder** - 12 V de la pila de baja tensión del vehículo.  Idealmente debe
   venir de una línea que es alta cuando el sistema esté necesitado y bajo cuando
   el vehículo esté estacionado por duraciones largas.  Este es porque el
   microcontrolador funcionará en cualquier momento que hay un voltaje en esta

@@ -31,114 +31,130 @@ vous partagez la route.  Ces incluent, mais ne sont pas limités à la
 fonctionnels.  Procédez à votre risque.
 
 ## Construire le Système
-This system is composed of three components: a PCB with the microcontroller and
-electronics; firmware, which runs on the microcontroller; and an enclosure to
-offer some protection for the functional components of the system.  Each of the
-sections below contains more details about each component, how to build it, and
-some possible modifications.
+Ce système est composé de trois composants: un circuit imprimé avec le
+microcontrôleur et l'électronique; le micrologiciel, lequel exécute dans le
+microcontrôleur; et un boîtier pour offrir de protection à les composants
+fonctionnels du système.  Chacun des sections suivantes contient plus de détails
+sur chaque composant, comment le construire, et des modifications possibles.
 
 ### Circuit Imprimé
-![téléchargement en cours...](../images/schematic.png)
+![Téléchargement en cours...](../images/schematic.png)
 
-![téléchargement en cours...](../images/layout.png)
+![Téléchargement en cours...](../images/layout.png)
 
-The schematic and PCB were created with
-[EAGLE](https://www.autodesk.com/products/eagle/overview?term=1-YEAR). The
-project can be loaded from the files in this repository's pcb folder.  Here are
-the steps to build:
-1. Use EAGLE to export Gerber files from the main.brd file.  You can follow
-  [these instructions](https://www.autodesk.com/products/eagle/blog/gerber-nc-drill-pcb-manufacturing-basics-1/) from Autodesk.
-2. Find a PCB manufacturer and send the Gerber files and Excellon drill files
-  for manufacture.
-3. You should receive a blank PCB from the manufacturer.  All the components
-  were selected as through-hole to make home assembly easier.  You will need to
-  purchase all the parts by model number as shown on the schematic.
-4. Solder the components to the PCB.
+Le diagramme schématique et le circuit imprimé ont été créés avec
+[EAGLE](https://www.autodesk.com/products/eagle/overview?term=1-YEAR).  Le
+projet peut être chargé des fichiers dans le répertoire 'pcb' de ce dépôt.
+Voici les étapes pour le construire:
+1. Utilisez EAGLE à exporter les fichiers Gerber du fichier main.brd.  Vous
+  pouvez suivre [ces instructions](https://www.autodesk.com/products/eagle/blog/gerber-nc-drill-pcb-manufacturing-basics-1/)
+  d'Autodesk.
+2. Trouvez un fabricant des circuits imprimés et les envoyez les fichiers Gerber
+  et les fichiers Excellon pour fabrication.
+3. Vous devez recevoir un circuit imprimé vide du fabricant.  Tous les
+  composants ont été sélectionnés comme les composants de trou traversant pour
+  faire l'assemblage chez vous plus facile.  Vous aurez besoin d'acheter tous
+  les composants par numéro de modèle comme il est montré dans le diagramme
+  schématique.
+4. Soudez les composants au circuit imprimé.
 
-Some things to consider:
-1. This PCB intercepts the right and left turn signal lines and splits each into
-  three signals lines for each individual lamp.  Assuming 30 Watt brake lamps,
-  some of these traces will be passing up to 2.5 Amps, so if possible it is
-  recommended to widen some of these traces to reduce resistance and mitigate
-  the risk of thermal failure of the PCB.
-2. The connectors for power, ground, input, and output are not automotive grade.
-  They were selected as screw-in connectors to make debugging easier.  These
-  should be replaced with proper connectors if possible.
-3. The PCB layout contains sufficient space for a toroidal inductor for the
-  switched mode power supply.  If you plan on making your own inductor, you can
-  calculate the number of turns required using [this guide](http://www.nessengr.com/technical-data/toroid-inductor-formulas-and-calculator/).
-  Remember to choose a wire thick enough to support up to 1 Amp.
+Des choses à considérer:
+1. Ce circuit imprimé intercepte les lignes clignotants droit et gauche et les
+  divise en trois lignes de signal pour chaque lampe individuelle.  Supposant
+  lampes de stop de 30 watts, quelques traces porteront jusqu'à 2.5 ampères,
+  alors s'il est possible il est recommandé à élargir ces traces pour réduire
+  leurs résistances et atténuer le risque d'échec thermique du circuit imprimé.
+2. Les connecteur pour l'alimentation, la terre, l'entrée, et la sortie ne sont
+  pas de qualité automobile.  Ils ont été sélectionnés comme connecteurs de vis
+  pour faire la débogage plus facile.  Ces doivent être remplacés avec des
+  connecteurs appropriés s'il est possible.
+3. Le circuit imprimé contient l'espace suffisant pour un inducteur toroïdal
+  pour l'alimentation à découpage.  Si vous planifiez en faisant votre propre
+  inducteur, vous pouvez calculer le numéro de tours requis en utilisant
+  [ce guide](http://www.nessengr.com/technical-data/toroid-inductor-formulas-and-calculator/).
+  Rappelez-vous choisir un fil suffisamment large pour soutenir jusqu'à 1
+  ampère.
 
 ### Logiciel
-![téléchargement en cours...](../images/fsm.png)
+![Téléchargement en cours...](../images/fsm.png)
 
-The software component is composed of two finite state machine running on an
-MSP430 microcontroller.  There is one FSM for each turn signal: when the input
-signal line goes high, the FSM begins traversing through the output pattern
-vectors with transitions based on times.  Once the input signal line goes low,
-the FSM is reset.
+Le composant logiciel est composé de deux automates fini lesquels exécutent sur
+un microcontrôleur MSP430.  Il y a un automate fini pour chaque clignotant:
+lorsque la ligne du signal de l'entrée va à l'haute, l'automate fini commence à
+traverser les vecteurs du motif de la sortie avec transitions basé sur temps.
+Une fois que la ligne du signal de l'entrée va à la basse, l'automate fini se
+réinitialise.
 
-The software was created with TI's [Code Composer Studio](https://www.ti.com/tool/CCSTUDIO).
-You can load the project with the files in this repository's firmware folder.
-Here are the steps to compile the firmware and load it on the PCB:
-1. Buy an [MSP430 programmer](https://www.ti.com/tool/MSP-FET).
-2. Open the Code Composer Studio project in this repository's firmware folder.
-3. Connect the programmer to the debug header on the PCB.  The PCB's debug
-  header is designed to communicate with the programmer using SBW and UART.
-4. Follow the instructions in the [Code Composer Studio manual](https://www.ti.com/lit/ug/spru509h/spru509h.pdf)
-  to flash the device.
-5. When power is introduced on the PCB's 12 V power supply input, the MSP430
-  should boot.  You can verify functionality by supplying 12 V to either left or
-  right signal inputs and monitoring the voltages on the output pins.
+Le logiciel a été créé avec le [Code Composer Studio](https://www.ti.com/tool/CCSTUDIO)
+de TI. Vous pouvez charger le projet avec les fichiers dans le répertoire
+'firmware' de ce dépôt.  Voici les étapes pour compiler le micrologiciel et le
+charger sur le circuit imprimé:
+1. Achetez un [programmeur MSP430](https://www.ti.com/tool/MSP-FET).
+2. Ouvrez le project de Code Composer Studio dans le répertoire 'firmware' de ce
+  dépôt.
+3. Connectez le programmeur au connecteur de débogage du circuit imprimé.  Le
+  connecteur de débogage du circuit imprimé est conçu pour communiquer avec le
+  programmeur en utilisant SBW et UART.
+4. Suivez les instructions dans le [manuel de Code Composer Studio](https://www.ti.com/lit/ug/spru509h/spru509h.pdf)
+  pour charger le micrologiciel au appareil.
+5. Quand le pouvoir est introduit dans l'entrée de l'alimentation 12 V du
+  circuit imprimé, le MSP430 devrait se démarrer.  Vous pouvez vérifier le
+  fonctionnalité en fournissant 12 V à chacun des entrées des clignotants gauche
+  ou droit et en surveillant les tensions sur les goujons de sortie.
 
-Some things to consider:
-1. You can define custom patterns using the macros at the top of the main.c file
-2. You can speed up or slow down the sequential pattern by changing the
-  definition of TIMER_RESOLUTION_TICKS in main.c
-3. The version of the MSP430 used in this project only has one 8-bit port.  If
-  your vehicle has more than six individual lamps (3 per side) that need to be
-  controlled, you will need to select a different microcontroller and redesign
-  the PCB.
+Des choses à considérer:
+1. Vous pouvez définir motifs à la mode en utilisant les macros à la tête du
+  fichier main.c.
+2. Vous pouvez accélérer ou ralentir le motif séquentiel en changeant la
+  définition de TIMER_RESOLUTION_TICKS dans main.c.
+3. La version du MSP430 laquelle est utilisée en ce projet seulement a un port
+  8-bit.  Si votre véhicule a plus que six lampes individuelles (3 par côté)
+  qu'ont besoin d'être contrôlées, vous aurez besoin de sélectionner un
+  microcontrôleur différent et repenser le circuit imprimé.
 
 ### Boîtier
-![téléchargement en cours...](../images/top.png)
+![Téléchargement en cours...](../images/top.png)
 
-![téléchargement en cours...](../images/gasket.png)
+![Téléchargement en cours...](../images/gasket.png)
 
-![téléchargement en cours...](../images/bottom.png)
+![Téléchargement en cours...](../images/bottom.png)
 
-The enclosure was designed using [OpenSCAD](https://openscad.org/).  This is not
-a weatherproof design and the goal is to provide a minimum level of protection
-for the PCB.  As such, it is recommended to install the enclosure in the
-interior of the vehicle.
+Le boîtier a été conçu avec [OpenSCAD](https://openscad.org/).  Ceci n'est pas
+une conception imperméable et le but est apporter un niveau minimum de
+protection pour le circuit imprimé.  Comme tel, il est recommandé à installer le
+boîtier dans l'intérieur du véhicule.
 
-The enclosure CAD drawings are meant as a rough guide.  You can machine your own
-metal enclosure based on the the drawings or convert them to STL files and 3D
-print the pieces.  If the enclosure is 3D printed, please ensure that a plastic
-is used which can handle the thermal extremes that can be found inside a
-vehicle.
+Les dessins de CAO du boîtier sont proposés comme un guide approximatif.  Vous
+pouvez usiner votre propre boîtier de métal basé sur les dessins ou les
+convertir en fichiers de STL et imprimer en 3D les pièces.  Si le boîtier est
+imprimé en 3D, s'il vous plaît vous assurez que vous utilisiez un plastique que
+puisse résister les extrêmes thermiques qu'on peut trouver dans un véhicule.
 
 ## Installation du Système
-![téléchargement en cours...](../images/slbd.png)
+![Téléchargement en cours...](../images/slbd.png)
 
-The system has the following connections with the vehicle's wiring:
-* **Power** - 12 V from the vehicle's low voltage battery.  Ideally this should
-  come from a line that is high when the system is needed and low when the
-  vehicle is parked for long durations.  This is because the microcontroller
-  will be running anytime voltage is supplied on this input and could drain the
-  battery if the vehicle is parked for a long time.  
-* **Ground** - Vehicle ground; this can be connected to the vehicle chassis.
-* **Right signal in** - Vehicle's original 12 V line to the right turn signal.
-* **Left signal in** - Vehicle's original 12V line to the left turn signal.
-* **Right signal out 1** - Connection between the system and the rear inner
-  right turn signal lamp.
-* **Right signal out 2** - Connection between the system and the rear center
-  right turn signal lamp.
-* **Right signal out 3** - Connection between the system and the rear outer
-  right turn signal lamp.
-* **Left signal out 1** - Connection between the system and the rear inner left
-  turn signal lamp.
-* **Left signal out 2** - Connection between the system and the rear center left
-  turn signal lamp.
-* **Left signal out 3** - Connection between the system and the rear outer left
-  turn signal lamp.
+Le système a les connexions suivantes avec le câblage du véhicule:
+* **Pouvoir** - 12 V de la pile de basse tension du véhicule.  Idéalement ce
+  devrait venir d'une ligne laquelle est haute lorsque le véhicule a besoin du
+  système et basse lorsque le véhicule est stationné pour longtemps.  C'est
+  parce que le microcontrôleur fonctionnera quand la tension est fournie à cette
+  entrée et pourrait drainer la pile si le véhicule reste stationné pour
+  longtemps.
+* **Terre** - La terre du véhicule; ceci peut être rattachée au châssis du
+  véhicule.
+* **Entrée de clignotant droit** - La ligne 12 V originalement au clignotant
+  droit du véhicule.
+* **Entrée de clignotant gauche** - La ligne 12 V originalement au clignotant
+  gauche du véhicule.
+* **Sortie de clignotant droit 1** - Le lien entre le système et la lampe de
+  clignotant droit arrière de dedans.
+* **Sortie de clignotant droit 2** - Le lien entre le système et la lampe de
+  clignotant droit arrière du milieu.
+* **Sortie de clignotant droit 3** - Le lien entre le système et la lampe de
+  clignotant droit arrière d'extérieur.
+* **Sortie de clignotant gauche 1** - Le lien entre le système et la lampe de
+  clignotant gauche arrière de dedans.
+* **Sortie de clignotant gauche 2** - Le lien entre le système et la lampe de
+  clignotant gauche arrière du milieu.
+* **Sortie de clignotant gauche 3** - Le lien entre le système et la lampe de
+  clignotant gauche arrière d'extérieur.
