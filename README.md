@@ -12,8 +12,8 @@ segments that illuminate in some dynamic pattern when the signal is activated.
 While this functionality comes built in to many modern vehicles, this project
 seeks to provide a simple method to introduce this functionality to classic cars
 without having to replace the existing turn signal lights.  The software and
-hardware are configured by default for a vehicle with three independent rear turn
-signal lamps on each side of the vehicle, but can be adapted for other
+hardware are configured by default for a vehicle with three independent rear
+turn signal lamps on each side of the vehicle, but can be adapted for other
 configurations if needed.
 
 If you plan to install this system on your vehicle, please read this entire
